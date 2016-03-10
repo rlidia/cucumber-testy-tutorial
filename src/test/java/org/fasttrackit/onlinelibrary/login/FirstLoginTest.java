@@ -1,12 +1,16 @@
 package org.fasttrackit.onlinelibrary.login;
 
 import com.sdl.selenium.web.utils.Utils;
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * Created by lidiar on 3/7/2016.
@@ -16,7 +20,7 @@ public class FirstLoginTest extends TestBase {
 
 
     @Test
-    public void T1validLoginTest() {
+    public void validLoginTest() {
         openUrl();
         doLogin("eu@fast.com","eu.pass");
 
@@ -25,7 +29,7 @@ public class FirstLoginTest extends TestBase {
             WebElement logOutLink = driver.findElement(By.linkText("Logout"));
             logOutLink.click();
         } catch (NoSuchElementException ex) {
-            Assert.fail("could not logn and find logout button");
+            Assert.fail("could not login and find logout button");
         }
     }
 
@@ -37,7 +41,7 @@ public class FirstLoginTest extends TestBase {
         passwField.sendKeys(passWord);
 
         //  WebElement loginBtn = driver.findElement(By.id("loginButton"));
-        WebElement loginBtn = driver.findElement(By.className("btn"));
+        WebElement loginBtn = driver.findElement(By.className("login-btn"));
         loginBtn.click();
     }
 
@@ -47,9 +51,39 @@ public class FirstLoginTest extends TestBase {
 
 
     @Test
-    public void T2failedLoginTest() {
+    public void failedLoginTest() {
         openUrl();
         doLogin("eu@fast.com","eu.passERROR");
+
+
+        assertThatErrorIs("Please enter your password!");
+
+    }
+
+    private void assertThatErrorIs(String message) {
+        WebElement warningMsj=driver.findElement(By.className("error-msg"));
+        //  WebElement warningMsj=driver.findElement(By.xpath("//div[]"));
+        System.out.println(warningMsj.getText());
+        assertThat(warningMsj.getText(),is(message));
+    }
+
+    @Test
+    public void withoutPasswordLoginTest() {
+        openUrl();
+        doLogin("eu@fast.com","");
+
+        assertThatErrorIs("Please enter your password!");
+
+    }
+
+
+    @Test
+    public void withoutEmailLoginTest() {
+        openUrl();
+        doLogin("","eu@fast.com");
+
+        assertThatErrorIs("Please enter your email!");
+
     }
 
     @Test
@@ -60,17 +94,15 @@ public class FirstLoginTest extends TestBase {
         loginBtn.click();
 
         Utils.sleep(2000);
-        WebElement warningMsj=driver.findElement(By.className("error-msg"));
-
-        if (warningMsj.isDisplayed())
-
-        {
-            System.out.println("Message is displayed");
-        } else
-
-        {
+        try{
+            WebElement warningMsj=driver.findElement(By.className("error-msg"));
+            if (warningMsj.isDisplayed()) {
+                System.out.println("------------Message is displayed---------");
+            }
+        }catch(NoSuchElementException ex){
             System.out.println("Message is not displayed");
         }
+
     }
 
     @Test
