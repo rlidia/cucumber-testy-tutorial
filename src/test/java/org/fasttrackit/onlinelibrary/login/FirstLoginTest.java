@@ -1,10 +1,12 @@
 package org.fasttrackit.onlinelibrary.login;
 
 import com.sdl.selenium.web.utils.Utils;
+import org.fasttrackit.example.LoginPage;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,11 +16,17 @@ import static org.hamcrest.core.Is.is;
 @Test
 public class FirstLoginTest extends TestBase {
 
+    private LoginPage loginPage;
+
+    //right click -> Generate -> Constructor
+    public FirstLoginTest() {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+    }
 
     @Test
     public void validLoginTest() {
         openUrl();
-        doLogin("eu@fast.com", "eu.pass");
+        loginPage.doLogin("eu@fast.com", "eu.pass");
 
         Utils.sleep(2000);
         try {
@@ -29,17 +37,7 @@ public class FirstLoginTest extends TestBase {
         }
     }
 
-    private void doLogin(String userName, String passWord) {
-        //driver.findElement(By.id("email")).sendKeys("eu@fast.com");
-        WebElement emailField = driver.findElement(By.id("email"));
-        emailField.sendKeys(userName);
-        WebElement passwField = driver.findElement(By.id("password"));
-        passwField.sendKeys(passWord);
 
-        //  WebElement loginBtn = driver.findElement(By.id("loginButton"));
-        WebElement loginBtn = driver.findElement(By.className("login-btn"));
-        loginBtn.click();
-    }
 
     private void openUrl() {
         driver.get("https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html");
@@ -49,7 +47,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void failedLoginTest() {
         openUrl();
-        doLogin("eu@fast.com", "eu.passERROR");
+        loginPage.doLogin("eu@fast.com", "eu.passERROR");
         assertThatErrorIs("Please enter your password!");
 
     }
@@ -63,7 +61,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void withoutPasswordLoginTest() {
         openUrl();
-        doLogin("eu@fast.com", "");
+        loginPage.doLogin("eu@fast.com", "");
         assertThatErrorIs("Please enter your password!");
 
     }
@@ -72,7 +70,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void withoutEmailLoginTest() {
         openUrl();
-        doLogin("", "eu@fast.com");
+        loginPage.doLogin("", "eu@fast.com");
 
         assertThatErrorIs("Please enter your email!");
 
@@ -81,7 +79,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void T4NoCredentialsLoginTest() {
         openUrl();
-        doLogin("", "");
+        loginPage.doLogin("", "");
         assertThatErrorIs("Please enter your email!");
 
     }
@@ -89,7 +87,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void T3successLoginTest() {
         openUrl();
-        doLogin("eu@fast.com", "eu.pass");
+        loginPage.doLogin("eu@fast.com", "eu.pass");
 
         Utils.sleep(2000);
         WebElement logOutLink = driver.findElement(By.linkText("Logoutx"));
@@ -107,7 +105,7 @@ public class FirstLoginTest extends TestBase {
     @Test
     public void successChangePassword() {
         openUrl();
-        doLogin("eu@fast.com", "eu.pass");
+        loginPage.doLogin("eu@fast.com", "eu.pass");
 
         WebElement preferenceButton = driver.findElement(By.xpath("//nav//button"));
         preferenceButton.click();
