@@ -3,6 +3,7 @@ package org.fasttrackit.onlinelibrary.login;
 import com.sdl.selenium.web.utils.Utils;
 import org.fasttrackit.example.ChangePasswordPage;
 import org.fasttrackit.example.LoginPage;
+import org.fasttrackit.example.NavigationBarPage;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -19,6 +20,7 @@ public class ChangePasswordTest extends TestBase {
 
     private LoginPage loginPage;
     private ChangePasswordPage changePasswordPage;
+    private NavigationBarPage navigationBarPage;
 
     //right click -> Generate -> Constructor
     public ChangePasswordTest() {
@@ -36,9 +38,13 @@ public class ChangePasswordTest extends TestBase {
         openUrl();
         loginPage.doLogin("eu@fast.com", "eu.pass");
 
+        navigationBarPage.openPreferencesWindow();
         changePasswordPage.changePassword("eu.pass", "eu.pass2");
 
+        String statusElementText = changePasswordPage.getStatusMessage();
 
+        System.out.println(statusElementText);
+        assertThat(statusElementText, is("Your password has been successfully changed."));
 
     }
 }

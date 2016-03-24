@@ -32,13 +32,16 @@ public class ChangePasswordPage {
     private   WebElement statusMsj;
 
     public void changePassword(String oldPassword, String newPassword) {
-        preferenceButton.click();
-        Utils.sleep(2000);
+     //   preferenceButton.click();
+     //   Utils.sleep(2000);
         currentPasswField.sendKeys(oldPassword);
         newPasswField.sendKeys(newPassword);
         newPasswRepeatField.sendKeys(newPassword);
         saveButton.click();
-        assertThat(statusMsj.getText(), is("Your password has been successfully changed."));
+      //  assertThat(statusMsj.getText(), is("Your password has been successfully changed."));
     }
 
+    public String getStatusMessage(){
+        return statusMsj.getText();
+    }
 }
