@@ -8,12 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-
-/**
- * Created by lidiar on 3/17/2016.
- */
 public class ChangePasswordPage {
 
     private WebLocator windowPreference=new WebLocator().setId("preferences-win");
