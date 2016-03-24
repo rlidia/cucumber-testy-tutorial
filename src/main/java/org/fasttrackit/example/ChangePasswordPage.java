@@ -1,5 +1,7 @@
 package org.fasttrackit.example;
 
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.form.TextField;
 import com.sdl.selenium.web.utils.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,6 +16,9 @@ import static org.hamcrest.core.Is.is;
  */
 public class ChangePasswordPage {
 
+    private WebLocator windowPreference=new WebLocator().setId("preferences-win");
+    TextField password=new TextField(windowPreference).setName("password");
+    //in loc de setXpath avem setElPath - setElPath cand iti sti xpathul si dorim safolosim si  stim xpathul
 
     @FindBy(how = How.XPATH, using ="//div[@id='preferences-win']//input[@name='password']")
     private  WebElement currentPasswField;
@@ -29,6 +34,9 @@ public class ChangePasswordPage {
 
     @FindBy(how = How.CSS, using="#preferences-win .status-msg")
     private   WebElement statusMsj;
+
+    @FindBy(how = How.XPATH, using="//*[@id='preferences-win']//button[text()='Close']")
+    private   WebElement btnClose;
 
     public void changePassword(String oldPassword, String newPassword) {
         currentPasswField.sendKeys(oldPassword);
@@ -47,5 +55,9 @@ public class ChangePasswordPage {
         newPasswField.sendKeys(newPassword);
         newPasswRepeatField.sendKeys(repeatPassword);
         saveButton.click();
+    }
+
+    public void closePreferenceWindows(){
+        btnClose.click();
     }
 }

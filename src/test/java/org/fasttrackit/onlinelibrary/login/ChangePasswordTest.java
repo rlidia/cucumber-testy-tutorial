@@ -1,15 +1,10 @@
 package org.fasttrackit.onlinelibrary.login;
 
-import com.sdl.selenium.web.utils.Utils;
 import org.fasttrackit.example.ChangePasswordPage;
 import org.fasttrackit.example.LoginPage;
 import org.fasttrackit.example.NavigationBarPage;
 import org.fasttrackit.util.TestBase;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,7 +58,35 @@ public class ChangePasswordTest extends TestBase {
         assertThat(statusElementText, is("Your preview password is incorrect!"));
     }
 
-    //bug - if I let empty the new passord and repeat password  - Save  => Your password has been successfully changed.
+    @Test
+    public void oldPasswordFieldEmptyTest() {
+        openUrl();
+        loginPage.doLogin("eu@fast.com", "eu.pass");
+
+        navigationBarPage.openPreferencesWindow();
+        changePasswordPage.changePassword("", "eu.pass2");
+
+        String statusElementText = changePasswordPage.getStatusMessage();
+
+        System.out.println(statusElementText);
+        assertThat(statusElementText, is("Your preview password is incorrect!"));
+    }
+
+    @Test
+    public void newConfirmedPasswordFieldEmptyTest() {
+        openUrl();
+        loginPage.doLogin("eu@fast.com", "eu.pass");
+
+        navigationBarPage.openPreferencesWindow();
+        changePasswordPage.changePassword("", "");
+
+        String statusElementText = changePasswordPage.getStatusMessage();
+
+        System.out.println(statusElementText);
+        assertThat(statusElementText, is("Empty fields!"));
+    }
+
+
 
     @Test
     public void repeatPasswordIsWrongTest() {
@@ -71,11 +94,13 @@ public class ChangePasswordTest extends TestBase {
         loginPage.doLogin("eu@fast.com", "eu.pass");
 
         navigationBarPage.openPreferencesWindow();
-        changePasswordPage.changePassword3Param("eu.pass", "eu.pass2","abcdefg");
+        changePasswordPage.changePassword3Param("eu.pass", "eu.pass2", "abcdefg");
 
         String statusElementText = changePasswordPage.getStatusMessage();
 
         System.out.println(statusElementText);
         assertThat(statusElementText, is("Password does not match the confirm password!"));
+
+        changePasswordPage.closePreferenceWindows();
     }
 }
