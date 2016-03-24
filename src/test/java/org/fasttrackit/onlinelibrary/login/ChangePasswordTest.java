@@ -26,6 +26,7 @@ public class ChangePasswordTest extends TestBase {
     public ChangePasswordTest() {
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         changePasswordPage = PageFactory.initElements(driver, ChangePasswordPage.class);
+        navigationBarPage = PageFactory.initElements(driver, NavigationBarPage.class);
     }
 
     private void openUrl() {
@@ -34,7 +35,7 @@ public class ChangePasswordTest extends TestBase {
 
 
     @Test
-    public void successChangePassword() {
+    public void successChangePasswordTest() {
         openUrl();
         loginPage.doLogin("eu@fast.com", "eu.pass");
 
@@ -45,6 +46,36 @@ public class ChangePasswordTest extends TestBase {
 
         System.out.println(statusElementText);
         assertThat(statusElementText, is("Your password has been successfully changed."));
+    }
 
+
+    @Test
+    public void oldPasswordIsWrongTest() {
+        openUrl();
+        loginPage.doLogin("eu@fast.com", "eu.pass");
+
+        navigationBarPage.openPreferencesWindow();
+        changePasswordPage.changePassword("eu.passWrong", "eu.pass2");
+
+        String statusElementText = changePasswordPage.getStatusMessage();
+
+        System.out.println(statusElementText);
+        assertThat(statusElementText, is("Your preview password is incorrect!"));
+    }
+
+    //bug - if I let empty the new passord and repeat password  - Save  => Your password has been successfully changed.
+
+    @Test
+    public void repeatPasswordIsWrongTest() {
+        openUrl();
+        loginPage.doLogin("eu@fast.com", "eu.pass");
+
+        navigationBarPage.openPreferencesWindow();
+        changePasswordPage.changePassword3Param("eu.pass", "eu.pass2","abcdefg");
+
+        String statusElementText = changePasswordPage.getStatusMessage();
+
+        System.out.println(statusElementText);
+        assertThat(statusElementText, is("Password does not match the confirm password!"));
     }
 }
