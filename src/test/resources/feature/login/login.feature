@@ -44,3 +44,17 @@ Feature: Customer I can login to web site
 
   Scenario: Force logout
     Then I click on link with text "Log Out"
+
+
+  Scenario: Add 2 numbers
+    Given I enter 5 as first number
+    And I enter 4 as second number
+    When I press add
+    Then the result should be 9
+
+  Scenario: Successfully login into app-demo
+  Given I open url "https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html"
+    When I login using email "tu@fast.com"/"tu.pass"
+    And I click on "Login" button
+    Then I should see an element with text "Log Out"
+   And I should see following elements with texts " App Demo"

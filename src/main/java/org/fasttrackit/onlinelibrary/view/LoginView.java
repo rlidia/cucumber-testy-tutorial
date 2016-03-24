@@ -19,6 +19,8 @@ public class LoginView extends WebLocator {
             .setLabelPosition("//following-sibling::");
     private TextField userNameField = new TextField(this).setName("username");
     private TextField passwordField = new TextField(this).setName("password");
+    private TextField emailField=new TextField(this).setId("email");
+    private TextField passField=new TextField(this).setId("password");
 
     public TextField fakePasswordField = new TextField(this).setLabel("Password", SearchType.CHILD_NODE)
             .setLabelPosition("//following-sibling::").setPosition(2);
@@ -32,6 +34,12 @@ public class LoginView extends WebLocator {
         userNameField.setValue(user);
         fakePasswordField.click(); // this is how ui is implemented
         passwordField.setValue(pass);
+        loginButton.assertClick();
+    }
+
+    public void loginWithEmail(String e, String pass) {
+        emailField.setValue(e);
+        passField.setValue(pass);
         loginButton.assertClick();
     }
 

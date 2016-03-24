@@ -48,21 +48,17 @@ public class FirstLoginTest extends TestBase {
     public void failedLoginTest() {
         openUrl();
         loginPage.doLogin("eu@fast.com", "eu.passERROR");
-        assertThatErrorIs("Please enter your password!");
+        loginPage.assertThatErrorIs("Please enter your password!");
 
     }
 
-    private void assertThatErrorIs(String message) {
-        WebElement warningMsj = driver.findElement(By.className("error-msg"));
-        System.out.println(warningMsj.getText());
-        assertThat(warningMsj.getText(), is(message));
-    }
+
 
     @Test
     public void withoutPasswordLoginTest() {
         openUrl();
         loginPage.doLogin("eu@fast.com", "");
-        assertThatErrorIs("Please enter your password!");
+        loginPage.assertThatErrorIs("Please enter your password!");
 
     }
 
@@ -72,7 +68,7 @@ public class FirstLoginTest extends TestBase {
         openUrl();
         loginPage.doLogin("", "eu@fast.com");
 
-        assertThatErrorIs("Please enter your email!");
+        loginPage.assertThatErrorIs("Please enter your email!");
 
     }
 
@@ -80,7 +76,7 @@ public class FirstLoginTest extends TestBase {
     public void T4NoCredentialsLoginTest() {
         openUrl();
         loginPage.doLogin("", "");
-        assertThatErrorIs("Please enter your email!");
+        loginPage.assertThatErrorIs("Please enter your email!");
 
     }
 
@@ -102,41 +98,7 @@ public class FirstLoginTest extends TestBase {
         }
     }
 
-    @Test
-    public void successChangePassword() {
-        openUrl();
-        loginPage.doLogin("eu@fast.com", "eu.pass");
 
-        WebElement preferenceButton = driver.findElement(By.xpath("//nav//button"));
-        preferenceButton.click();
-
-        Utils.sleep(2000);
-
-       // WebElement currentPasswField = driver.findElement(By.cssSelector( "#preferences-win input[name=password]");
-        WebElement currentPasswField = driver.findElement(By.xpath("//div[@id='preferences-win']//input[@name='password']"));
-        currentPasswField.sendKeys("eu.pass");
-
-
-        WebElement newPasswField = driver.findElement(By.xpath("//input[@name='newPassword']"));
-        newPasswField.sendKeys("eu.pass2");
-
-        /*CTRL+D face copypaste la ce ai selectat*/
-
-        WebElement newPasswRepeatField = driver.findElement(By.xpath("//input[@name='newPasswordRepeat']"));
-        newPasswRepeatField.sendKeys("eu.pass2");
-
-        //WebElement saveButton = driver.findElement(By.xpath("//div[@id='preferences-win']//button[text()='Save']"));
-        WebElement saveButton = driver.findElement(By.cssSelector("#preferences-win button.btn-warning"));
-        saveButton.click();
-
-/*
-        WebElement warningMsj = driver.findElement(By.className("status-msg"));
-        assertThat(warningMsj.getText(), is("Password does not match the confirm password!"));
-        */
-
-        WebElement statusMsj = driver.findElement(By.cssSelector("#preferences-win .status-msg"));
-        assertThat(statusMsj.getText(), is("Your password has been successfully changed."));
-    }
 
 
 }
