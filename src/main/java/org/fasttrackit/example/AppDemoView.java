@@ -5,6 +5,7 @@ package org.fasttrackit.example;
 import com.sdl.selenium.bootstrap.button.UploadFile;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.bootstrap.form.DatePicker;
+import com.sdl.selenium.bootstrap.form.MultiSelect;
 import com.sdl.selenium.bootstrap.form.SelectPicker;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.button.SelectFilesHandler;
@@ -23,13 +24,19 @@ public class AppDemoView extends WebLocator {
     public WebLocator selectCalendar =new WebLocator(this).setClasses("icon-calendar");
    // private WebLocator dateCalendar = new ;
     public DatePicker dateP=new DatePicker(this);
-    public SelectPicker selectP =new SelectPicker(this);
+    public SelectPicker selectP =new SelectPicker(this).setLabel("Tech:");
+    public DropdownList dropdownList=new DropdownList().setLabel("Tech:");
+    public DropdownList executeL= new DropdownList().setLabel("Execute");
+
     public CheckBox checkBoxStopProc =  new CheckBox(this).setLabel("Stop the process?", SearchType.CHILD_NODE).setLabelPosition("//");
     public CheckBox checkBoxLabelEnter =  new CheckBox(this).setLabel("Label with Enter.", SearchType.CHILD_NODE).setLabelPosition("//");
 
     public UploadFile selectFile = new UploadFile(this, "TPT Test:");
 
     private WebLocator disabledFieldSpan = new WebLocator(this).setLabel("Span");
+
+    public WebLocator multiSelectContainer =new WebLocator(this).setLabel("Source:");
+    public MultiSelect multiSelect=new MultiSelect(this,"Source:");
 
 
 

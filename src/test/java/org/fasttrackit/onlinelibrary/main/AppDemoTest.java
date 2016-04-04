@@ -4,11 +4,15 @@ import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.button.UploadFile;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.web.SearchType;
+import com.sdl.selenium.web.WebLocator;
+import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
 import org.fasttrackit.example.AppDemoView;
+import org.fasttrackit.example.DropdownList;
 import org.fasttrackit.example.FormTableView;
 import org.fasttrackit.util.TestBase;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
@@ -29,7 +33,24 @@ public class AppDemoTest extends TestBase {
     @Test
     public void selectFromDropdownTest() {
         openPage();
+        String defaultSelectedOption= appDemo.selectP.getValue();
+        Assert.assertEquals(defaultSelectedOption,"Auto");
+
         appDemo.selectP.select("No ADB");
+        appDemo.selectP.select("Manual");
+        String selectedOption= appDemo.selectP.getValue();
+        Assert.assertEquals(selectedOption,"Manual");
+    }
+
+
+    @Test
+    public void selectFromDropdownListTest() {
+        openPage();
+        System.out.println(">"+appDemo.dropdownList.getValue()+"<");
+        appDemo.dropdownList.select("Manual");
+        System.out.println(">"+appDemo.dropdownList.getValue()+"<");
+
+        appDemo.executeL.select("No");
     }
 
     @Test
@@ -52,14 +73,30 @@ public class AppDemoTest extends TestBase {
     }
 
     @Test
+    public void multiSelectTest() {
+        openPage();
+        appDemo.multiSelect.select("Carrots","Tomatoes","Mushrooms","Pepperoni");
+    }
+
+    @Test
+    public void searchAfterAndMultiSelectTest(){
+        openPage();
+        //appDemo.
+    }
+
+    @Test
     public void tableTest(){
         openPage();
         //formTableView.clickOnCheckBoxRowWithName("John3",1);
         formTableView.clickOnCheckBoxRowWithName("John", 1);
         Row row = formTableView.table.getRow(new Cell(2, "John"), new Cell(3, "Rambo"));
+        Row row1 = formTableView.table.getRow(new Cell(2, "John3"), new Cell(3, "Rambo3"),new Cell(4, "johnrambo@mail.com"));
         CheckBox c =  new CheckBox(row);
-        Button b =  new Button(row);
+        Button b =  new Button(row1).setText("Second");
         c.click();
+        b.click();
 
     }
-}
+
+
+    }
