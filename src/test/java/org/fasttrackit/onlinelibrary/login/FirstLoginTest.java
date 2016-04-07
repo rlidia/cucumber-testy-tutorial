@@ -5,12 +5,10 @@ import com.sdl.selenium.web.utils.Utils;
 import org.fasttrackit.example.LoginView;
 import org.fasttrackit.util.TestBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+// to remove unused imports meniu Code -Optimize imports
 @Test
 public class FirstLoginTest extends TestBase {
 

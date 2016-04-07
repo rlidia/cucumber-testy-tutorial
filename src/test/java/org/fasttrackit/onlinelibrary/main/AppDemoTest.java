@@ -3,20 +3,20 @@ package org.fasttrackit.onlinelibrary.main;
 import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.button.UploadFile;
 import com.sdl.selenium.bootstrap.form.CheckBox;
-import com.sdl.selenium.web.SearchType;
-import com.sdl.selenium.web.WebLocator;
-import com.sdl.selenium.web.link.WebLink;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
 import org.fasttrackit.example.AppDemoView;
-import org.fasttrackit.example.DropdownList;
 import org.fasttrackit.example.FormTableView;
 import org.fasttrackit.util.TestBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 public class AppDemoTest extends TestBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppDemoTest.class);
+
     private AppDemoView appDemo = new AppDemoView();
     private FormTableView formTableView =new FormTableView();
     private void openPage() {
@@ -46,12 +46,15 @@ public class AppDemoTest extends TestBase {
     @Test
     public void selectFromDropdownListTest() {
         openPage();
-        System.out.println(">"+appDemo.dropdownList.getValue()+"<");
+       // System.out.println(">"+appDemo.dropdownList.getValue()+"<");
         appDemo.dropdownList.select("Manual");
-        System.out.println(">"+appDemo.dropdownList.getValue()+"<");
-
+       // System.out.println(">"+appDemo.dropdownList.getValue()+"<");
         appDemo.executeL.select("No");
+
+
     }
+
+
 
     @Test
     public void selectCheckBoxesTest(){
@@ -73,15 +76,42 @@ public class AppDemoTest extends TestBase {
     }
 
     @Test
+    public void selectFromMultiDropdownListTest() {
+        openPage();
+        // System.out.println(">"+appDemo.dropdownList.getValue()+"<");
+        appDemo.multiselectL.multiSelect("Tomatoes","Mushrooms");
+    }
+
+    @Test
     public void multiSelectTest() {
         openPage();
         appDemo.multiSelect.select("Carrots","Tomatoes","Mushrooms","Pepperoni");
     }
 
     @Test
+    public void selectAllTest() {
+        openPage();
+        boolean select=appDemo.multiSelect.select("Select all");
+        Assert.assertTrue(select,"Cannot select all options");
+    }
+
+
+    @Test
+    public void multiSelectSearchTest() {
+        openPage();
+        appDemo.multiselectL.assertClick();
+        appDemo.searchFilter.sendKeys("M");
+        appDemo.multiselectL.multiSelect("Mozzarella","Mushrooms");
+    }
+
+
+    @Test
     public void searchAfterAndMultiSelectTest(){
         openPage();
-        //appDemo.
+        appDemo.multiselectL.assertClick();
+        appDemo.searchFilter.sendKeys("M");
+        appDemo.multiselectL.multiSelect("Mozzarella","Pepperoni","Mushrooms");
+        //nu ar fi bine sa punem in loc de assetClick doar click, daca nu gaseste Pepperoni sa treaca la urmatorul?
     }
 
     @Test
