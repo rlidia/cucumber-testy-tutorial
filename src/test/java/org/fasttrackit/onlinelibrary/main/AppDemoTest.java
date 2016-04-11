@@ -5,6 +5,7 @@ import com.sdl.selenium.bootstrap.button.UploadFile;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
+import com.sdl.selenium.web.utils.PropertiesReader;
 import org.fasttrackit.example.AppDemoView;
 import org.fasttrackit.example.FormTableView;
 import org.fasttrackit.util.TestBase;
@@ -69,10 +70,10 @@ public class AppDemoTest extends TestBase {
     public void uploadFileTest(){
         openPage();
         UploadFile selectFile = new UploadFile(appDemo, "TPT Test:");
-        String exePath = "D:\\Selenium training\\cucumber-testy-tutorial\\src\\test\\resources\\upload\\upload.exe";
-        String dirPath = "D:\\Selenium training\\demo_site\\style.css";
-        appDemo.selectFile.upload(selectFile, new String[]{exePath, dirPath + "README.md"});
-        appDemo.selectFile.change("Change", new String[]{exePath, dirPath + "style.css"});
+        String dirPath = "D:\\Selenium training\\demo_site\\";
+        String resourcePath=PropertiesReader.RESOURCES_DIRECTORY_PATH;
+      //  appDemo.selectFile.upload(selectFile,  resourcePath + "README.md");
+        appDemo.selectFile.upload(selectFile,  dirPath + "README.md");
     }
 
     @Test
