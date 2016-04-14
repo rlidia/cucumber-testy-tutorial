@@ -7,7 +7,7 @@ Integration Tests with [Testy](https://github.com/sdl/Testy) and [Cucumber](http
     mvn clean test -DfailIfNoTests=false
 	
 For Running specific Test add system parameter "test":
-	 
 	 mvn clean test -DfailIfNoTests=false -Dtest=LoginTest
+	 
 	 mvn clean test -DfailIfNoTests=false -Dtest=AccountTest
 

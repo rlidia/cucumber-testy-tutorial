@@ -11,7 +11,7 @@ import org.openqa.selenium.support.How;
 
 public class NavigationBarPage {
   /*  @FindBy(how = How.XPATH, using = "//nav//button")
-    private WebElement preferencesButton;*/
+  private WebElement preferencesButton;*/
     private Button preferencesButton=new Button().setElPath("//nav//button");
 
     private WebLink appDemoLink =new WebLink().setText("App Demo");

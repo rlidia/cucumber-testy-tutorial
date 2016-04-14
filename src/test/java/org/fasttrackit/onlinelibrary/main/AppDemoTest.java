@@ -126,8 +126,6 @@ public class AppDemoTest extends TestBase {
         Button b =  new Button(row1).setText("Second");
         c.click();
         b.click();
-
     }
-
 
     }

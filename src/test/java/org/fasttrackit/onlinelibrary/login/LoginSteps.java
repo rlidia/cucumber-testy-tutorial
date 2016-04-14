@@ -1,7 +1,6 @@
 package org.fasttrackit.onlinelibrary.login;
 
 import com.sdl.selenium.web.WebLocator;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -20,6 +19,7 @@ public class LoginSteps extends TestBase {
     
     private TopMenuNavigationView topMenuNavigation = new TopMenuNavigationView();
     private LoginView loginView = new LoginView();
+    private org.fasttrackit.example.LoginView loginPage = new org.fasttrackit.example.LoginView();
 
     @When("^I click on Login button from top navigation menu$")
     public void I_click_on_Login_button_from_top_navigation_menu() {
@@ -91,5 +91,10 @@ public class LoginSteps extends TestBase {
     @And("^I login using email \"([^\"]*)\"/\"([^\"]*)\"$")
     public void iLoginUsingEmail(String email, String passw) throws Throwable {
         loginView.loginWithEmail(email, passw);
+    }
+
+    @When("^I login with credentials \"([^\"]*)\"/\"([^\"]*)\"$")
+    public void iLoginWithCredentials(String email, String passw) throws Throwable {
+        loginPage.doLogin(email,passw);
     }
 }
