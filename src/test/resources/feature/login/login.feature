@@ -52,9 +52,3 @@ Feature: Customer I can login to web site
     When I press add
     Then the result should be 9
 
-  Scenario: Successfully login into app-demo
-  Given I open url "https://rawgit.com/sdl/Testy/master/src/test/functional/app-demo/login.html"
-    When I login using email "tu@fast.com"/"tu.pass"
-    And I click on "Login" button
-    Then I should see an element with text "Log Out"
-   And I should see following elements with texts " App Demo"
