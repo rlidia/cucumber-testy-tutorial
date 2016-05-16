@@ -179,7 +179,7 @@ public class AppDemoTest extends TestBase {
         WebLocator imgL= new WebLocator(wrap).setTag("img");
         /*imgL.waitToRender();
         sau*/
-        imgL.ready();
+
         for (WebElement img:imgL.findElements()) {
             String titleI= img.getAttribute("title");
             LOGGER.debug(titleI);
@@ -219,7 +219,6 @@ public class AppDemoTest extends TestBase {
         WebLocator dataview=new WebLocator().setId("dataview-example");
         WebLocator wrap=new WebLocator(dataview).setClasses("thumb-wrap");
         WebLocator imgL= new WebLocator(wrap).setTag("img");
-        imgL.ready();
         wrap.setPosition(3);
         LOGGER.debug(imgL.getSelector().toString());
         wrap.click();
