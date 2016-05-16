@@ -4,6 +4,8 @@ import com.sdl.selenium.bootstrap.button.Button;
 import com.sdl.selenium.bootstrap.button.UploadFile;
 import com.sdl.selenium.bootstrap.form.CheckBox;
 import com.sdl.selenium.utils.config.WebDriverConfig;
+import com.sdl.selenium.web.SearchText;
+import com.sdl.selenium.web.SearchType;
 import com.sdl.selenium.web.WebLocator;
 import com.sdl.selenium.web.table.Cell;
 import com.sdl.selenium.web.table.Row;
@@ -226,15 +228,14 @@ public class AppDemoTest extends TestBase {
 
     @Test
     public void clickOnCertainPhotoFromPropertiesTest(){
-        driver.get("http://examples.sencha.com/extjs/6.0.2/examples/classic/view/data-view.html");
-       /*itar tab si se creaza for-ul*/
-       /*fori tab si se creaza for-ul*/
-        WebLocator dataview=new WebLocator().setId("dataview-example");
         PropertiesReader config=new PropertiesReader("src\\test\\resources\\app.properties");
-        WebLocator selectEl=new WebLocator().setText(config.getProperty("dataview.select.item"));
-        WebLocator wrap=new WebLocator(dataview).setClasses("thumb-wrap").setChildNodes(selectEl);
+        driver.get(config.getProperty("app.url"));
+        WebLocator dataview=new WebLocator().setId("dataview-example");
 
-        wrap.click();
+        /*WebLocator selectEl=new WebLocator().setText(config.getProperty("dataview.select.item"));
+        WebLocator wrap=new WebLocator(dataview).setClasses("thumb-wrap").setChildNodes(selectEl);*/
+        WebLocator selectEl=new WebLocator().setClasses("thumb-wrap").setText(config.getProperty("dataview.select.item"), SearchType.DEEP_CHILD_NODE);
+        selectEl.click();
 
     }
 
